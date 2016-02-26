@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Application</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+<!--BEGIN QUALTRICS SITE INTERCEPT-->
+<script type='text/javascript'>
+(function(){var g=function(e,h,f,g){
+this.get=function(a){for(var a=a+"=",c=document.cookie.split(";"),b=0,e=c.length;b<e;b++){for(var d=c[b];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};
+this.set=function(a,c){var b="",b=new Date;b.setTime(b.getTime()+6048E5);b="; expires="+b.toGMTString();document.cookie=a+"="+c+b+"; path=/; "};
+this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"v"==h&&(e=Math.random()>=e/100?0:100),a=[h,e,0],this.set(f,a.join(":"));else return!0;var c=a[1];if(100==c)return!0;switch(a[0]){case "v":return!1;case "r":return c=a[2]%Math.floor(100/c),a[2]++,this.set(f,a.join(":")),!c}return!0};
+this.go=function(){if(this.check()){var a=document.createElement("script");a.type="text/javascript";a.src=g+ "&t=" + (new Date()).getTime();document.body&&document.body.appendChild(a)}};
+this.start=function(){var a=this;window.addEventListener?window.addEventListener("load",function(){a.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){a.go()})}};
+try{(new g(100,"r","QSI_S_ZN_00nOUmkI6PM80iF","//zn00noumki6pm80if-thriventfinancial.siteintercept.qualtrics.com/WRSiteInterceptEngine/?Q_ZID=ZN_00nOUmkI6PM80iF&Q_LOC="+encodeURIComponent(window.location.href))).start()}catch(i){}})();
+</script><div id='ZN_00nOUmkI6PM80iF'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+<!--END SITE INTERCEPT-->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+<script>
+var _hsq = _hsq || [];
+_hsq.push(["setContentType", "standard-page"]);
+(function (d, s, i, r) {
+    if (d.getElementById(i)) { return; }
+    var n = d.createElement(s), e = document.getElementsByTagName(s)[0];
+    n.id = i; n.src = '//js.hs-analytics.net/analytics/' + (Math.ceil(new Date() / r) * r) + '/268983.js';
+    e.parentNode.insertBefore(n, e);
+})(document, "script", "hs-analytics", 300000);
+</script>
+
+
+<script type=text/javascript>
+    // * Important, VMS and either a floating button or static chat button are required to invoke the HTML SDK custom window *
+    // Below are the various options available
+    // These values need to be set before the config file for reconstituion purposes;
+    window._bcChatWindowUrl = 'themes/bpf';   // available options are basic, lovato, hubris and nightshade
+    window._bcSessionApiKey = '350578603775649107:348288314837302215:8tRDpZgy08j7fV7s986ybWQSzlijnF91'; // under setup (either in .net client or at setup-boldchat.com)
+    // go to general account settings -> Chat API -> Create a key that is linked to
+    // a website and chat window. Copy that generated key and post here
+    window._bcForcePopup = false;               // here you can override if the sdk window will open up as a popup or a layered window
+    // Available options are: null || true || false
+    // If set to null, the determination of the window opening in layered or popup is determined by whatever window the button you clicked on is tied to.
+    //  For example, let's say you have both a floating button and a static button on your page.
+    //  Further, let's say that the floating button is tied to a popup chat window and the static chat button is tied to a layered chat window.
+    //  In this example, if you click on the floating button, the html sdk will be opened as a popup. The static button will open the window as a
+    //  floating window.
+</script>
+<!-- inject:bcStart:js -->
+<script src="scripts/bc-util.js"></script>
+<script src="scripts/bc-config.js"></script>
+<script src="scripts/bc-sdk-start.js"></script>
+<!-- endinject -->
+<script type=text/javascript>
+  // Ensure the bc object is created to prevent loading order problems
+  var bc = window.bc || {};
+
+  // When this method is defined it will be called at the point the chat is created.
+  bc.setOverrides = function() {
+      // Save a copy of the original showForm method.
+      var originalProcessChatEndData = bc.currentSession._processChatEndData;
+
+      // Define a new version of the showForm method
+      bc.currentSession._processChatEndData = function(data) {
+        bc.currentSession.viewManager.hideBusy();
+        bc.currentSession.viewManager.hideMessages();
+        if(data && data.PostChat) {
+          //TODO: The intro is being displayed even though the form may be not be applicable (not enough chat interaction to qualify for post-chat form)
+          var introKey = 'api#postchat#intro';
+          var topFieldLocKey = 'api#email#transcript';
+          if(data.PostChat.Fields && data.PostChat.Fields.length === 1 && data.PostChat.Fields[0].Key && data.PostChat.Fields[0].Key === 'email') {
+            introKey = 'api#email#transcript';
+            topFieldLocKey = null;
+          }
+          bc.currentSession.viewManager.showForm(introKey, data.PostChat, null, 'api#postchat#done', bc.currentSession._postChatFormSubmitted, null, topFieldLocKey, true);
+
+        } else {
+          bc.currentSession.viewManager.showForm('api#chat#ended', null, null, 'api#chat#close', function() {
+            bc.currentSession.viewManager.closeChat();
+            bc.currentSession.viewManager.hideForm();
+          }, null, null, true);
+        }
+      };
+  };
+
+
+  var loadBoldChat = function () {
+   window._bcvma = window._bcvma || [];
+  _bcvma.push(["setAccountID", "350578603775649107"]);
+  _bcvma.push(["setParameter", "WebsiteID", "348053487451577460"]);
+  _bcvma.push(["setParameter", "InvitationID", "40045917177716968"]);
+  _bcvma.push(["setParameter", "VisitName", hubspotProfile.VisitName]);
+  _bcvma.push(["setParameter", "VisitLastName", hubspotProfile.LastName]);
+  _bcvma.push(["setParameter", "VisitPhone", hubspotProfile.VisitPhone]);
+  _bcvma.push(["setParameter", "VisitEmail", hubspotProfile.VisitEmail]);
+  _bcvma.push(["setParameter", "VisitRef", ""]);
+  _bcvma.push(["setParameter", "VisitInfo", ""]);
+  _bcvma.push(["setParameter", "CustomUrl", ""]);
+  _bcvma.push(["setParameter", "WindowParameters", "MarketingCookie=" + hubspotProfile.MarketingCookie]);
+  _bcvma.push(["addFloat", {type: "chat", id: "5648961056491084298"}]);
+  _bcvma.push(["pageViewed", document.location.href, document.referrer]);
+  var bcLoad = function(){
+    if(window.bcLoaded) return; window.bcLoaded = true;
+    var vms = document.createElement("script"); vms.type = "text/javascript"; vms.async = true;
+    vms.src = ('https:'==document.location.protocol?'https://':'http://') + "vmss.boldchat.com/aid/350578603775649107/bc.vms4/vms.js";
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(vms, s);
+  };
+  if(window.pageViewer && pageViewer.load) pageViewer.load();
+  else if(document.readyState=="complete") bcLoad();
+  else if(window.addEventListener) window.addEventListener('load', bcLoad, false);
+  else window.attachEvent('onload', bcLoad);
+};
+</script>
+
+<script>
+  var cookieUTK = '';
+  (function() {
+    var re = new RegExp(name + "hubspotutk=([^;]+)");
+    var value = re.exec(document.cookie);
+    cookieUTK = (value != null) ? value[1] : null;
+  }());
+  var hubspotProfile = {VisitName:"",LastName:"",VisitPhone:"",VisitEmail:"",MarketingCookie:""};
+  (function() {
+      if(cookieUTK) {
+        var base = 'https://testapps.brightpeakfinancial.com/bpfServices/api/v1/Hubspot';
+        var app = 'app={ "AppCode": "QuoteTerm", "AppType": "AppType", "SessionId": null, "EventType": null }';
+        var utk = 'utk=' + cookieUTK;
+        var url = base + '?' + utk + '&' + app;
+        jQuery.ajax({
+          type: "GET",
+          url: url ,
+          success: function(response) {
+
+            var profile = (response && response.Result == 'Success') ? response : {};
+            hubspotProfile.VisitName= (profile['FirstName'] != undefined) ? profile['FirstName'] : '', 
+            hubspotProfile.LastName = (profile['LastName'] !== undefined) ? profile['LastName'] : '', 
+            hubspotProfile.VisitPhone = (profile['Phone'] !== undefined) ? profile['Phone'] : '', 
+            hubspotProfile.VisitEmail = (profile['EmailAddress'] !== undefined) ? profile['EmailAddress'] : '',
+      hubspotProfile.MarketingCookie = utk;
+            loadBoldChat();
+
+            if(profile['EmailAddress'] === undefined){
+               window.bpf_profile = 'needemail';
+            }
+          },
+          error: function (response) {
+      console.log("error calling hubspot");
+            loadBoldChat();
+          }
+        });
+      }
+      else {
+        loadBoldChat();
+      }
+   }());
+  function validateEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
+
+   function sendToHubspot() {
+      var email = document.getElementById("newsletter_intercept").value;
+
+      var invalid_block = document.getElementById("invalid_email");
+      invalid_block.style.display = 'none';
+
+      if(validateEmail(email)) {
+        var data = {"app" : {"AppCode" : "NewsletterIntercept" }, "contact": {"EmailAddress" : email}};
+        var submitting_block = document.getElementById("submiting_block");
+        submitting_block.style.display = 'inherit';
+        jQuery.ajax({
+              type: "POST",
+              url: 'https://testapps.brightpeakfinancial.com/bpfServices/api/v1/SubmitContact',
+              data: data,
+              success: function(response){
+                QSI.API.unload();
+              },
+              error: function(response){
+                console.log("error", response);
+              }
+          });
+      } else {
+        invalid_block.style.display = 'inherit';
+      }
+   }
+</script>
+
+<noscript><a href=http://www.boldchat.com title="Visitor Monitoring" target=_blank><img alt="Visitor Monitoring" src="https://vms.boldchat.com/aid/350578603775649107/bc.vmi?&amp;wdid=348053487451577460&amp;vr=&amp;vn=&amp;vi=&amp;ve=&amp;vp=&amp;iq=&amp;curl=" border=0 width=1 height=1></a></noscript>
+</head>
+<body style="font-family:'Open sans'">
+    Here is the body.
+</body>
+</html>
