@@ -1,3 +1,5 @@
+This is a forked version of https://github.com/LogMeIn-BoldChat/Html-Chat-Sdk
+
 # Html-Chat-SDK
 
 ### What is the BoldChat HTML Chat Window SDK?
